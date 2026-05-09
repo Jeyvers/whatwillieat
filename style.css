@@ -238,11 +238,15 @@ body {
 }
 
 @media (min-width: 500px) {
-  .grid { columns: 3; }
+  .grid {
+    columns: 3;
+  }
 }
 
 @media (min-width: 700px) {
-  .grid { columns: 4; }
+  .grid {
+    columns: 4;
+  }
 }
 
 /* ── Cards ── */
@@ -304,8 +308,13 @@ body {
   color: var(--muted);
 }
 
-.card:hover .save-btn { opacity: 1; }
-.save-btn.saved { opacity: 1; color: var(--brand); }
+.card:hover .save-btn {
+  opacity: 1;
+}
+.save-btn.saved {
+  opacity: 1;
+  color: var(--brand);
+}
 
 .card-info {
   padding: 10px 12px 12px;
@@ -397,7 +406,9 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── Add form — Pinterest layout ── */
@@ -410,7 +421,9 @@ body {
 }
 
 @media (max-width: 600px) {
-  .add-layout { grid-template-columns: 1fr; }
+  .add-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .upload-zone {
@@ -423,7 +436,9 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   background: #f0ece6;
 }
 
@@ -489,8 +504,12 @@ body {
   background: var(--border);
 }
 
-.upload-divider::before { left: 0; }
-.upload-divider::after { right: 0; }
+.upload-divider::before {
+  left: 0;
+}
+.upload-divider::after {
+  right: 0;
+}
 
 .add-form-col {
   display: flex;
@@ -586,7 +605,9 @@ body {
   letter-spacing: 0.03em;
 }
 
-.submit-btn:hover { opacity: 0.88; }
+.submit-btn:hover {
+  opacity: 0.88;
+}
 
 /* ── Detail view ── */
 .detail-view {
@@ -617,7 +638,9 @@ body {
 }
 
 @media (max-width: 720px) {
-  .detail-layout { grid-template-columns: 1fr; }
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .detail-img {
@@ -702,7 +725,9 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .recipe-link:hover {
@@ -723,7 +748,9 @@ body {
   margin-top: 1rem;
 }
 
-.recipe-add .form-input { flex: 1; }
+.recipe-add .form-input {
+  flex: 1;
+}
 
 .recipe-add-btn {
   background: var(--brand);
@@ -739,7 +766,9 @@ body {
   transition: opacity 0.15s;
 }
 
-.recipe-add-btn:hover { opacity: 0.88; }
+.recipe-add-btn:hover {
+  opacity: 0.88;
+}
 
 /* ── Saved empty ── */
 .saved-empty {
@@ -800,7 +829,9 @@ body {
   color: var(--text);
 }
 
-.modal-input:focus { border-color: var(--brand); }
+.modal-input:focus {
+  border-color: var(--brand);
+}
 
 .modal-btn {
   width: 100%;
@@ -871,7 +902,9 @@ body {
   white-space: nowrap;
 }
 
-.toast.show { opacity: 1; }
+.toast.show {
+  opacity: 1;
+}
 
 /* ── Form tag chips ── */
 .form-tag-chips {
@@ -916,7 +949,9 @@ body {
   padding-bottom: 4px;
 }
 
-.similar-grid::-webkit-scrollbar { display: none; }
+.similar-grid::-webkit-scrollbar {
+  display: none;
+}
 
 .similar-card {
   flex-shrink: 0;
@@ -925,7 +960,9 @@ body {
   transition: transform 0.2s;
 }
 
-.similar-card:hover { transform: scale(1.04); }
+.similar-card:hover {
+  transform: scale(1.04);
+}
 
 .similar-card img {
   width: 140px;
@@ -962,23 +999,29 @@ body {
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  /* Hero stacks vertically */
+  /* Hero stacks vertically and centers */
   .hero {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: 1rem;
-    padding-bottom: 1.5rem;
+    padding-top: 2.75rem;
+    padding-bottom: 2rem;
   }
 
   /* Hide the decorative background emoji */
-  .hero::after { display: none; }
+  .hero::after {
+    display: none;
+  }
 
-  .logo { font-size: 1.05rem; }
+  .logo {
+    font-size: 1.05rem;
+  }
 
-  /* Buttons row wraps naturally and stays left-aligned */
+  /* Buttons row centers and wraps */
   .hero-actions {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .btn-primary,
@@ -995,10 +1038,14 @@ body {
   }
 
   /* Card text */
-  .card-name { font-size: 13px; }
+  .card-name {
+    font-size: 13px;
+  }
 
   /* Search */
-  .search-bar { padding: 0.75rem var(--h-pad); }
+  .search-bar {
+    padding: 1.25rem var(--h-pad) 0.75rem;
+  }
 
   /* Add form */
   .add-layout {
@@ -1007,18 +1054,36 @@ body {
   }
 
   /* Detail */
-  .detail-view { padding: 1rem var(--h-pad) 2.5rem; }
-  .detail-name { font-size: 1.1rem; }
+  .detail-view {
+    padding: 1rem var(--h-pad) 2.5rem;
+  }
+  .detail-name {
+    font-size: 1.1rem;
+  }
 
   /* Similar dishes — smaller cards */
-  .similar-card { width: 120px; }
-  .similar-card img { width: 120px; height: 120px; }
-  .similar-img-placeholder { width: 120px; height: 120px; }
+  .similar-card {
+    width: 120px;
+  }
+  .similar-card img {
+    width: 120px;
+    height: 120px;
+  }
+  .similar-img-placeholder {
+    width: 120px;
+    height: 120px;
+  }
 
   /* Modal full-width */
-  .modal { padding: 1.25rem; }
+  .modal {
+    padding: 1.25rem;
+  }
 
   /* Recipe add row stacks */
-  .recipe-add { flex-direction: column; }
-  .recipe-add-btn { width: 100%; }
+  .recipe-add {
+    flex-direction: column;
+  }
+  .recipe-add-btn {
+    width: 100%;
+  }
 }
