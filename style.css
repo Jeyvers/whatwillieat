@@ -291,7 +291,7 @@ body {
   background: rgba(255, 255, 255, 0.92);
   border: none;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 17px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -301,10 +301,11 @@ body {
   opacity: 0;
   transition: opacity 0.15s;
   backdrop-filter: blur(4px);
+  color: var(--muted);
 }
 
 .card:hover .save-btn { opacity: 1; }
-.save-btn.saved { opacity: 1; }
+.save-btn.saved { opacity: 1; color: var(--brand); }
 
 .card-info {
   padding: 10px 12px 12px;

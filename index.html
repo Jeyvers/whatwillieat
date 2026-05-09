@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>what should i eat?</title>
+    <title>what will i eat?</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Syne:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.2.0/css/line.css" />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.2.0/css/line.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="fav.png" />
   </head>
@@ -18,14 +21,22 @@
     <div id="app">
       <div class="hero">
         <div class="hero-left">
-          <div class="logo">what should i <span>eat?</span></div>
+          <div class="logo">what will i <span>eat?</span></div>
           <div class="tagline">your african food library</div>
         </div>
         <div class="hero-actions">
-          <button class="btn-ghost" onclick="showTab('browse')">explore</button>
-          <button class="btn-primary" onclick="showTab('add')">+ add food</button>
-          <button class="btn-surprise" onclick="surpriseMe()">🎲 surprise me</button>
-          <button class="btn-ghost" id="auth-btn" onclick="toggleAuth()">log in to save</button>
+          <button class="btn-ghost" onclick="showTab('browse')">
+            <i class="uil uil-compass"></i> explore
+          </button>
+          <button class="btn-primary" onclick="showTab('add')">
+            <i class="uil uil-plus"></i> add food
+          </button>
+          <button class="btn-surprise" onclick="surpriseMe()">
+            <i class="uil uil-shuffle"></i> surprise me
+          </button>
+          <button class="btn-ghost" id="auth-btn" onclick="toggleAuth()">
+            <i class="uil uil-user"></i> log in to save
+          </button>
         </div>
       </div>
 
@@ -39,12 +50,16 @@
           />
         </div>
         <div class="filter-wrap">
-          <button class="filter-arrow" onclick="scrollFilters(-1)">&#8249;</button>
+          <button class="filter-arrow" onclick="scrollFilters(-1)">
+            <i class="uil uil-angle-left"></i>
+          </button>
           <div class="filter-row" id="tag-filters"></div>
-          <button class="filter-arrow" onclick="scrollFilters(1)">&#8250;</button>
+          <button class="filter-arrow" onclick="scrollFilters(1)">
+            <i class="uil uil-angle-right"></i>
+          </button>
         </div>
         <div class="grid" id="food-grid"></div>
-        <div id="scroll-sentinel" style="height:1px"></div>
+        <div id="scroll-sentinel" style="height: 1px"></div>
       </div>
 
       <div id="view-saved" style="display: none">
@@ -62,7 +77,9 @@
                 style="display: none"
               />
               <div id="upload-placeholder" class="upload-placeholder">
-                <div class="upload-arrow">↑</div>
+                <div class="upload-arrow">
+                  <i class="uil uil-cloud-upload"></i>
+                </div>
                 <div>Choose a file or drag and drop it here</div>
                 <span class="upload-hint">JPG, PNG, WEBP supported</span>
               </div>
@@ -139,7 +156,7 @@
               />
             </div>
             <button class="submit-btn" onclick="addFood()">
-              add to library →
+              add to library <i class="uil uil-arrow-right"></i>
             </button>
           </div>
         </div>
@@ -170,7 +187,9 @@
           placeholder="password"
         />
         <button class="modal-btn" onclick="doLogin()">log in</button>
-        <button class="modal-btn-secondary" onclick="doSignUp()">create account</button>
+        <button class="modal-btn-secondary" onclick="doSignUp()">
+          create account
+        </button>
         <button class="modal-close" onclick="closeModal()">maybe later</button>
       </div>
     </div>

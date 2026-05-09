@@ -154,7 +154,9 @@ function toggleAuth() {
 function updateAuthUI() {
   const btn = document.getElementById("auth-btn");
   if (!btn) return;
-  btn.textContent = currentUser ? `saved (${savedIds.size})` : "log in to save";
+  btn.innerHTML = currentUser
+    ? `<i class="uil uil-bookmark"></i> saved (${savedIds.size})`
+    : `<i class="uil uil-user"></i> log in to save`;
 }
 
 function showModal() {
@@ -498,7 +500,7 @@ function cardHTML(f) {
     <div class="card-img-wrap">
       ${imgContent}
       <button class="save-btn ${isSaved ? "saved" : ""}" onclick="toggleSave(event,'${f.id}')" title="${isSaved ? "unsave" : "save"}">
-        ${isSaved ? "🔖" : "🏷"}
+        <i class="uil uil-bookmark"></i>
       </button>
     </div>
     <div class="card-info">
@@ -551,12 +553,12 @@ function showDetail(id) {
     : "";
 
   document.getElementById("detail-content").innerHTML = `
-    <button class="back-btn" onclick="showTab('browse')">← back to library</button>
+    <button class="back-btn" onclick="showTab('browse')"><i class="uil uil-arrow-left"></i> back to library</button>
     <div class="detail-layout">
       <div>
         ${imgHTML}
         <button class="submit-btn" style="margin-top:12px" onclick="toggleSave(null,'${id}')">
-          ${isSaved ? "🔖 unsave" : "🏷 save to library"}
+          <i class="uil uil-bookmark"></i> ${isSaved ? "unsave" : "save to library"}
         </button>
       </div>
       <div>
