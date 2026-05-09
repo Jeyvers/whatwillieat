@@ -44,6 +44,7 @@ Two tables are required:
 | img_url | text |
 | description | text |
 | recipes | text[] |
+| slug | text (unique) |
 | added_by | uuid (references auth.users) |
 | created_at | timestamptz (default now()) |
 

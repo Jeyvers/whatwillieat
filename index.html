@@ -130,12 +130,22 @@
             </div>
             <div class="form-group">
               <label class="form-label">short description / recipe notes</label>
-              <textarea
-                class="form-input"
-                id="f-desc"
-                rows="3"
-                placeholder="Ingredients, how it's made, what makes it special..."
-              ></textarea>
+              <div class="rte-wrap">
+                <div class="rte-toolbar">
+                  <button type="button" class="rte-btn" onmousedown="rteCmd(event,'bold')" title="Bold"><i class="uil uil-bold"></i></button>
+                  <button type="button" class="rte-btn" onmousedown="rteCmd(event,'italic')" title="Italic"><i class="uil uil-italic"></i></button>
+                  <button type="button" class="rte-btn" onmousedown="rteCmd(event,'underline')" title="Underline"><i class="uil uil-underline"></i></button>
+                  <div class="rte-divider"></div>
+                  <button type="button" class="rte-btn" onmousedown="rteCmd(event,'insertUnorderedList')" title="Bullet list"><i class="uil uil-list-ul"></i></button>
+                  <button type="button" class="rte-btn" onmousedown="rteCmd(event,'insertOrderedList')" title="Numbered list"><i class="uil uil-list-ol-alt"></i></button>
+                </div>
+                <div
+                  class="rte-editor"
+                  id="f-desc"
+                  contenteditable="true"
+                  placeholder="Ingredients, how it's made, what makes it special..."
+                ></div>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label">tags *</label>

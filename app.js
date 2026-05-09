@@ -256,7 +256,8 @@ async function addFood() {
   }
 
   const country = document.getElementById("f-country").value.trim();
-  const desc = document.getElementById("f-desc").value.trim();
+  const descEl = document.getElementById("f-desc");
+  const desc = descEl ? descEl.innerHTML.trim() : "";
   const recipeUrl = document.getElementById("f-recipe-url").value.trim();
   const recipes = recipeUrl ? [recipeUrl] : [];
 
@@ -269,6 +270,7 @@ async function addFood() {
     img_url: imgUrl,
     description: desc || null,
     recipes,
+    slug: makeSlug(name),
     added_by: currentUser?.id ?? null,
   });
   hideLoader();
@@ -279,17 +281,12 @@ async function addFood() {
     return;
   }
 
-  [
-    "f-name",
-    "f-country",
-    "f-desc",
-    "f-tags-custom",
-    "f-img-url",
-    "f-recipe-url",
-  ].forEach((id) => {
+  ["f-name", "f-country", "f-tags-custom", "f-img-url", "f-recipe-url"].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
+  const rteEl = document.getElementById("f-desc");
+  if (rteEl) rteEl.innerHTML = "";
   selectedFormTags.clear();
   renderFormTags();
   const preview = document.getElementById("img-preview");
@@ -553,7 +550,10 @@ function showDetail(id) {
     : "";
 
   document.getElementById("detail-content").innerHTML = `
-    <button class="back-btn" onclick="showTab('browse')"><i class="uil uil-arrow-left"></i> back to library</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <button class="back-btn" style="margin-bottom:0" onclick="showTab('browse')"><i class="uil uil-arrow-left"></i> back to library</button>
+      ${f.slug ? `<button class="share-btn" onclick="shareRecipe('${f.slug}')"><i class="uil uil-share-alt"></i> share</button>` : ""}
+    </div>
     <div class="detail-layout">
       <div>
         ${imgHTML}
@@ -578,7 +578,9 @@ function showDetail(id) {
     ${similarHTML}`;
 
   setActiveTab("view-detail");
+  if (f.slug) setSlugInUrl(f.slug);
 }
+
 
 function similarCardHTML(f) {
   const imgHTML = f.img
@@ -632,6 +634,40 @@ async function addRecipeUrl(id) {
   }
   if (input) input.value = "";
   toast("recipe added! 🍴");
+}
+
+// ── Slug ──
+function makeSlug(name) {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    + "-" + Math.random().toString(36).slice(2, 7);
+}
+
+function getSlugFromUrl() {
+  return new URLSearchParams(window.location.search).get("dish");
+}
+
+function setSlugInUrl(slug) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("dish", slug);
+  history.pushState({}, "", url);
+}
+
+function clearSlugFromUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("dish");
+  history.pushState({}, "", url);
+}
+
+// ── RTE ──
+function rteCmd(e, cmd) {
+  e.preventDefault();
+  document.execCommand(cmd, false, null);
+  document.getElementById("f-desc")?.focus();
 }
 
 // ── Add form ──
@@ -733,6 +769,7 @@ function showTab(tab) {
     tab === "add" ? "block" : "none";
   document.getElementById("view-detail").style.display =
     tab === "detail" ? "block" : "none";
+  if (tab !== "detail") clearSlugFromUrl();
   if (tab === "saved") renderSaved();
   if (tab === "browse") renderGrid();
   if (tab === "add") renderFormTags();
@@ -742,6 +779,17 @@ function setActiveTab(view) {
   ["view-browse", "view-saved", "view-add", "view-detail"].forEach((v) => {
     document.getElementById(v).style.display = v === view ? "block" : "none";
   });
+}
+
+// ── Share ──
+function shareRecipe(slug) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("dish", slug);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url.toString()).then(() => toast("link copied! 🔗"));
+  } else {
+    prompt("copy this link:", url.toString());
+  }
 }
 
 // ── Surprise ──
@@ -772,6 +820,8 @@ window.closeModal = closeModal;
 window.doLogin = doLogin;
 window.doSignUp = doSignUp;
 window.toggleFormTag = toggleFormTag;
+window.rteCmd = rteCmd;
+window.shareRecipe = shareRecipe;
 
 // ── Init ──
 if (db) {
@@ -797,4 +847,10 @@ if (db) {
   await loadFoods(true);
   setupUploadZone();
   setupInfiniteScroll();
+
+  const slug = getSlugFromUrl();
+  if (slug) {
+    const match = cachedFoods.find((f) => f.slug === slug);
+    if (match) showDetail(match.id);
+  }
 })();
