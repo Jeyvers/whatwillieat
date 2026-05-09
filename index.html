@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>what should i eat?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Syne:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.2.0/css/line.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="fav.png" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="hero">
+        <div class="hero-left">
+          <div class="logo">what should i <span>eat?</span></div>
+          <div class="tagline">your african food library</div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-ghost" onclick="showTab('browse')">explore</button>
+          <button class="btn-primary" onclick="showTab('add')">+ add food</button>
+          <button class="btn-surprise" onclick="surpriseMe()">🎲 surprise me</button>
+          <button class="btn-ghost" id="auth-btn" onclick="toggleAuth()">log in to save</button>
+        </div>
+      </div>
+
+      <div id="view-browse">
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="search dishes, combos, ingredients..."
+            id="search-input"
+            oninput="filterFoods()"
+          />
+        </div>
+        <div class="filter-wrap">
+          <button class="filter-arrow" onclick="scrollFilters(-1)">&#8249;</button>
+          <div class="filter-row" id="tag-filters"></div>
+          <button class="filter-arrow" onclick="scrollFilters(1)">&#8250;</button>
+        </div>
+        <div class="grid" id="food-grid"></div>
+        <div id="scroll-sentinel" style="height:1px"></div>
+      </div>
+
+      <div id="view-saved" style="display: none">
+        <div class="grid" id="saved-grid"></div>
+      </div>
+
+      <div id="view-add" style="display: none">
+        <div class="add-layout">
+          <div>
+            <div class="upload-zone" id="upload-zone">
+              <input
+                type="file"
+                id="img-file"
+                accept="image/*"
+                style="display: none"
+              />
+              <div id="upload-placeholder" class="upload-placeholder">
+                <div class="upload-arrow">↑</div>
+                <div>Choose a file or drag and drop it here</div>
+                <span class="upload-hint">JPG, PNG, WEBP supported</span>
+              </div>
+              <img
+                id="img-preview"
+                class="upload-preview"
+                style="display: none"
+                alt="preview"
+              />
+            </div>
+            <div class="upload-divider">or</div>
+            <input
+              class="form-input"
+              id="f-img-url"
+              placeholder="Paste image URL *"
+              oninput="previewUrl()"
+            />
+          </div>
+
+          <div class="add-form-col">
+            <div class="form-section-title">add to the library</div>
+            <div class="type-toggle">
+              <button class="type-btn active" onclick="setType('dish', this)">
+                🍽 dish
+              </button>
+              <button class="type-btn" onclick="setType('combo', this)">
+                🤝 combo
+              </button>
+              <button class="type-btn" onclick="setType('snack', this)">
+                🍢 snack
+              </button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">food name *</label>
+              <input
+                class="form-input"
+                id="f-name"
+                placeholder="e.g. Jollof Rice"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">country / region</label>
+              <input
+                class="form-input"
+                id="f-country"
+                placeholder="e.g. Nigeria"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">short description / recipe notes</label>
+              <textarea
+                class="form-input"
+                id="f-desc"
+                rows="3"
+                placeholder="Ingredients, how it's made, what makes it special..."
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">tags *</label>
+              <div class="form-tag-chips" id="form-tag-chips"></div>
+              <input
+                class="form-input"
+                id="f-tags-custom"
+                placeholder="or add custom tags, comma separated"
+                style="margin-top: 8px"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">recipe url</label>
+              <input
+                class="form-input"
+                id="f-recipe-url"
+                placeholder="https://..."
+              />
+            </div>
+            <button class="submit-btn" onclick="addFood()">
+              add to library →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-detail" style="display: none">
+        <div class="detail-view" id="detail-content"></div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="auth-modal" style="display: none">
+      <div class="modal">
+        <h3>save your picks</h3>
+        <p>
+          Create a free account to bookmark dishes and build your personal food
+          wishlist.
+        </p>
+        <input
+          class="modal-input"
+          type="email"
+          id="m-email"
+          placeholder="email address"
+        />
+        <input
+          class="modal-input"
+          type="password"
+          id="m-pass"
+          placeholder="password"
+        />
+        <button class="modal-btn" onclick="doLogin()">log in</button>
+        <button class="modal-btn-secondary" onclick="doSignUp()">create account</button>
+        <button class="modal-close" onclick="closeModal()">maybe later</button>
+      </div>
+    </div>
+
+    <div class="loader" id="loader" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
